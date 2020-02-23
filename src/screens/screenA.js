@@ -7,6 +7,7 @@ import { inject } from "mobx-react";
 }))
 class screenA extends Component {
   render() {
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <Text> textInComponent A </Text>
