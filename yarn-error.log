@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /Users/Hwi/.yarn/bin/yarn.js add @react-navigation/switch
+  /usr/local/bin/node /Users/Hwi/.yarn/bin/yarnpkg add react-native-reanimated@~1.4.0 react-native-screens@2.0.0-alpha.12 react-native-safe-area-context@0.6.0 @react-native-community/masked-iew
 
 PATH: 
   /Users/Hwi/.rvm/gems/ruby-2.4.1/bin:/Users/Hwi/.rvm/gems/ruby-2.4.1@global/bin:/Users/Hwi/.rvm/rubies/ruby-2.4.1/bin:/Users/Hwi/.yarn/bin:/Users/Hwi/.config/yarn/global/node_modules/.bin:/usr/local/sbin:/Users/Hwi/npm/bin:/Library/Frameworks/Python.framework/Versions/3.5/bin:/Users/Hwi/.composer/vendor/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/Hwi/.rvm/gems/ruby-2.4.1/bin:/Users/Hwi/.rvm/gems/ruby-2.4.1@global/bin:/Users/Hwi/.rvm/rubies/ruby-2.4.1/bin:/Users/Hwi/.yarn/bin:/Users/Hwi/.config/yarn/global/node_modules/.bin:/usr/local/sbin:/Users/Hwi/npm/bin:/Library/Frameworks/Python.framework/Versions/3.5/bin:/Users/Hwi/.composer/vendor/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/mongodb/bin:/Users/Hwi/npm/lib/node_modules/express-generator:/Users/Hwi/Desktop/Developer/apache-ant-1.9.7/bin:/Users/Hwi/.rvm/bin:/usr/local/mongodb/bin:/Users/Hwi/npm/lib/node_modules/express-generator:/Users/Hwi/Desktop/Developer/apache-ant-1.9.7/bin:/Users/Hwi/.rvm/bin:/Users/Hwi/Desktop/Developer/NewsLetteRSS/newsletterss-app/node_modules/.bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@react-navigation%2fswitch: Not found
+  Error: https://registry.yarnpkg.com/@react-native-community%2fmasked-iew: Not found
       at Request.params.callback [as _callback] (/Users/Hwi/.yarn/lib/cli.js:66947:18)
       at Request.self.callback (/Users/Hwi/.yarn/lib/cli.js:140665:22)
       at Request.emit (events.js:210:5)

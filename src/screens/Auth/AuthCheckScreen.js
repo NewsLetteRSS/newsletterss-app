@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { ActivityIndicator, StyleSheet, View, Text } from "react-native";
-import * as SecureStore from "expo-secure-store";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +18,8 @@ class AuthCheckScreen extends Component {
 
   loadApp = async () => {
     setTimeout(() => {
-      this.props.navigation.navigate("Main");
+      // TODO: SecureStore의 토큰 활용하여 로그인 여부 확인
+      this.props.navigation.navigate("Auth");
     }, 1000);
   };
 
