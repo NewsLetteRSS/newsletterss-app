@@ -1,19 +1,25 @@
+import { Button, H1, Icon, Input, Item, Text } from "native-base";
+import { Text as RNText } from "react-native";
 import React from "react";
+import { useForm } from "react-hook-form";
 import {
-  View,
-  Text as RNText,
+  Alert,
+  Keyboard,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  TouchableOpacity
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback
 } from "react-native";
-import { StyleSheet } from "react-native";
-import { Item, Input, Icon, Button, Text, H1 } from "native-base";
-import { Keyboard } from "react-native";
 
 const SignInScreen = ({ navigation }) => {
-  function login() {
-    navigation.navigate("Main");
-  }
+  const { register, errors, handleSubmit, setValue } = useForm();
+
+  const login = data => {
+    console.log(data);
+    if (data.id && data.pw) {
+      goScreen("Main");
+    }
+  };
 
   function goScreen(screen) {
     navigation.navigate(screen);
@@ -24,18 +30,34 @@ const SignInScreen = ({ navigation }) => {
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         {/* TODO: 로고 */}
         <H1 style={{ marginBottom: 10 }}>NewsLetteRSS</H1>
-        <Item rounded style={styles.input}>
-          <Input placeholder="아이디" autoCapitalize="none" />
+        <Item rounded style={styles.input} error={errors.id && true}>
+          <Input
+            placeholder="아이디"
+            autoCapitalize="none"
+            ref={register({ name: "id" }, { required: true })}
+            onChangeText={text => setValue("id", text, true)}
+          />
           <Icon type="FontAwesome5" name="user-circle" />
         </Item>
-        <Item rounded style={styles.input}>
-          <Input placeholder="비밀번호" secureTextEntry={true} />
+        {errors.id && (
+          <RNText style={styles.errorText}>아이디를 입력해주세요.</RNText>
+        )}
+        <Item rounded style={styles.input} error={errors.pw && true}>
+          <Input
+            placeholder="비밀번호"
+            secureTextEntry={true}
+            ref={register({ name: "pw" }, { required: true })}
+            onChangeText={text => setValue("pw", text, true)}
+          />
           <Icon type="FontAwesome5" name="key" />
         </Item>
+        {errors.pw && (
+          <RNText style={styles.errorText}>비밀번호를 입력해주세요.</RNText>
+        )}
         <Button
-          onPress={() => login()}
-          title="메인"
+          onPress={handleSubmit(login)}
           style={styles.loginButton}
+          disabled={errors.id || errors.pw ? true : false}
           block
         >
           <Text>로그인</Text>
@@ -83,6 +105,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#666"
+  },
+  errorText: {
+    color: "red",
+    alignSelf: "baseline",
+    paddingHorizontal: 5
   }
 });
 

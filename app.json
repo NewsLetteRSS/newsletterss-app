@@ -18,7 +18,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "dev.hwiveloper.naranim",
+      "bundleIdentifier": "dev.hwiveloper.newsletterss",
       "supportsTablet": true
     },
     "android": {
