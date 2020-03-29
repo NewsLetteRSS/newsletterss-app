@@ -17,9 +17,13 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name="SignIn"
         component={SignInScreen}
-        options={{ header: () => {} }}
+        options={{ title: "로그인", header: () => {} }}
       />
-      <AuthStack.Screen name="SignUp" component={SignUpScreen} />
+      <AuthStack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{ title: "회원가입", header: () => {} }}
+      />
       <AuthStack.Screen name="FindId" component={FindIdScreen} />
       <AuthStack.Screen name="FindPw" component={FindPwScreen} />
     </AuthStack.Navigator>
