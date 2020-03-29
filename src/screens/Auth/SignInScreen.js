@@ -34,7 +34,7 @@ const SignInScreen = ({ navigation }) => {
   const login = data => {
     console.log(data);
     if (username && password) {
-      goScreen("Main");
+      // TODO: 로그인 프로세스 타고 토큰 저장 후 Main으로 이동
     } else {
       Alert.alert("확인", "아이디 또는 비밀번호를 확인해 주세요.");
     }
