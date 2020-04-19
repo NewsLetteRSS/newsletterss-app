@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import SignInScreen from "../screens/Auth/SignInScreen";
-import SignUpScreen from "../screens/Auth/SignupScreen";
+import SignUpScreen from "../screens/Auth/SignUpScreen";
 import FindIdScreen from "../screens/Auth/FindIdScreen";
 import FindPwScreen from "../screens/Auth/FindPwScreen";
 
@@ -17,9 +17,13 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name="SignIn"
         component={SignInScreen}
-        options={{ header: () => {} }}
+        options={{ title: "로그인", header: () => {} }}
       />
-      <AuthStack.Screen name="SignUp" component={SignUpScreen} />
+      <AuthStack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{ title: "회원가입", header: () => {} }}
+      />
       <AuthStack.Screen name="FindId" component={FindIdScreen} />
       <AuthStack.Screen name="FindPw" component={FindPwScreen} />
     </AuthStack.Navigator>

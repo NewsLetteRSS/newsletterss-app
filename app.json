@@ -18,8 +18,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "dev.hwiveloper.naranim",
-      "supportsTablet": true
+      "bundleIdentifier": "dev.newsletterss.app",
+      "supportsTablet": true,
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "dev.newsletterss.app",
