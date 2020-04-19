@@ -4,7 +4,7 @@ import { Spinner, Text } from "@ui-kitten/components";
 import { inject, observer } from "mobx-react";
 
 const AuthCheckScreen = inject("token")(
-  observer(props => {
+  observer((props) => {
     useEffect(() => {
       loadApp();
     }, []);
@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   checkMsg: {
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  },
 });
 
 export default AuthCheckScreen;

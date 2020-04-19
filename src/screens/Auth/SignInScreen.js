@@ -4,7 +4,7 @@ import {
   Layout,
   Text,
   StyleService,
-  useStyleSheet
+  useStyleSheet,
 } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -31,10 +31,10 @@ const SignInScreen = ({ navigation }) => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const login = data => {
-    console.log(data);
+  const login = (data) => {
     if (username && password) {
       // TODO: 로그인 프로세스 타고 토큰 저장 후 Main으로 이동
+      navigation.navigate("Main"); // 임시 이동
     } else {
       Alert.alert("확인", "아이디 또는 비밀번호를 확인해 주세요.");
     }
@@ -52,7 +52,7 @@ const SignInScreen = ({ navigation }) => {
       alwaysBounceHorizontal={false}
       alwaysBounceVertical={false}
       contentContainerStyle={{
-        flexGrow: 1
+        flexGrow: 1,
       }}
     >
       <View style={styles.headerContainer}>
@@ -68,7 +68,7 @@ const SignInScreen = ({ navigation }) => {
           placeholder="사용자명"
           value={username}
           onChangeText={setUsername}
-          icon={style => NRIcon(style, "person")}
+          icon={(style) => NRIcon(style, "person")}
           autoCapitalize="none"
         />
         <Input
@@ -77,10 +77,11 @@ const SignInScreen = ({ navigation }) => {
           value={password}
           secureTextEntry={!passwordVisible}
           onChangeText={setPassword}
-          icon={style =>
+          icon={(style) =>
             passwordVisible ? NRIcon(style, "eye") : NRIcon(style, "eye-off")
           }
           onIconPress={onPasswordIconPress}
+          key
         />
         <View style={styles.forgotPasswordContainer}>
           <Button
@@ -111,39 +112,39 @@ const SignInScreen = ({ navigation }) => {
 const stylesheet = StyleService.create({
   container: {
     flex: 1,
-    backgroundColor: "background-basic-color-1"
+    backgroundColor: "background-basic-color-1",
   },
   headerContainer: {
     justifyContent: "center",
     alignItems: "center",
     minHeight: 216,
-    backgroundColor: "color-primary-default"
+    backgroundColor: "color-primary-default",
   },
   formContainer: {
     flex: 1,
     paddingTop: 32,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   signInLabel: {
-    marginTop: 16
+    marginTop: 16,
   },
   signInButton: {
-    marginHorizontal: 16
+    marginHorizontal: 16,
   },
   signUpButton: {
     marginVertical: 12,
-    marginHorizontal: 16
+    marginHorizontal: 16,
   },
   forgotPasswordContainer: {
     flexDirection: "row",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   passwordInput: {
-    marginTop: 16
+    marginTop: 16,
   },
   forgotPasswordButton: {
-    paddingHorizontal: 0
-  }
+    paddingHorizontal: 0,
+  },
 });
 
 export default SignInScreen;
