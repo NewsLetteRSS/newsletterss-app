@@ -1,8 +1,6 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import screenA from "../screens/screenA";
-import screenB from "../screens/screenB";
 import HomeStackNavigator from "./HomeStackNavigator";
 import MyPageStackNavigator from "./MyPageStackNavigator";
 import SubscriptionStackNavigator from "./SubscriptionStackNavigator";
@@ -17,7 +15,7 @@ const homeTabOptions = {
       <FontAwesome5 name="home" color={color} size={size} focused={focused} />
     );
   },
-  tabBarLabel: "홈"
+  tabBarLabel: "홈",
 };
 
 const subscriptionTabOptions = {
@@ -31,7 +29,7 @@ const subscriptionTabOptions = {
       />
     );
   },
-  tabBarLabel: "구독관리"
+  tabBarLabel: "구독관리",
 };
 
 const myPageTabOptions = {
@@ -40,14 +38,14 @@ const myPageTabOptions = {
       <FontAwesome5 name="user" color={color} size={size} focused={focused} />
     );
   },
-  tabBarLabel: "마이페이지"
+  tabBarLabel: "마이페이지",
 };
 
 const TabNavigator = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: "#4391f0"
+        activeTintColor: "#4391f0",
       }}
     >
       <Tab.Screen

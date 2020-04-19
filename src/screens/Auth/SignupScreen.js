@@ -7,7 +7,7 @@ import {
   Layout,
   Input,
   Button,
-  CheckBox
+  CheckBox,
 } from "@ui-kitten/components";
 import { NRIcon } from "../../utils/icon-utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -42,7 +42,7 @@ const SignUpScreen = ({ navigation }) => {
       alwaysBounceHorizontal={false}
       alwaysBounceVertical={false}
       contentContainerStyle={{
-        flexGrow: 1
+        flexGrow: 1,
       }}
     >
       <View style={styles.headerContainer}>
@@ -54,7 +54,7 @@ const SignUpScreen = ({ navigation }) => {
         <Input
           autoCapitalize="none"
           placeholder="사용자명"
-          icon={style => NRIcon(style, "person")}
+          icon={(style) => NRIcon(style, "person")}
           value={userName}
           onChangeText={setUserName}
         />
@@ -63,7 +63,7 @@ const SignUpScreen = ({ navigation }) => {
           autoCapitalize="none"
           placeholder="이메일"
           caption={"이메일은 비밀번호 찾는 용도로 사용됩니다."}
-          icon={style => NRIcon(style, "email")}
+          icon={(style) => NRIcon(style, "email")}
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -73,7 +73,7 @@ const SignUpScreen = ({ navigation }) => {
           autoCapitalize="none"
           secureTextEntry={!passwordVisible}
           placeholder="비밀번호"
-          icon={style =>
+          icon={(style) =>
             passwordVisible ? NRIcon(style, "eye") : NRIcon(style, "eye-off")
           }
           value={password}
@@ -91,10 +91,11 @@ const SignUpScreen = ({ navigation }) => {
         <CheckBox
           style={styles.termsCheckBox}
           textStyle={styles.termsCheckBoxText}
-          text="서비스 이용약관에 동의합니다."
           checked={termsAccepted}
-          onChange={checked => setTermsAccepted(checked)}
-        />
+          onChange={(checked) => setTermsAccepted(checked)}
+        >
+          서비스 이용약관에 동의합니다.
+        </CheckBox>
       </Layout>
       <Button
         style={styles.signUpButton}
@@ -117,13 +118,13 @@ const SignUpScreen = ({ navigation }) => {
 
 const stylesheet = StyleService.create({
   container: {
-    backgroundColor: "background-basic-color-1"
+    backgroundColor: "background-basic-color-1",
   },
   headerContainer: {
     justifyContent: "center",
     alignItems: "center",
     minHeight: 216,
-    backgroundColor: "color-primary-default"
+    backgroundColor: "color-primary-default",
   },
   profileAvatar: {
     width: 116,
@@ -131,37 +132,37 @@ const stylesheet = StyleService.create({
     borderRadius: 58,
     alignSelf: "center",
     backgroundColor: "background-basic-color-1",
-    tintColor: "color-primary-default"
+    tintColor: "color-primary-default",
   },
   editAvatarButton: {
     width: 40,
     height: 40,
-    borderRadius: 20
+    borderRadius: 20,
   },
   formContainer: {
     flex: 1,
     paddingTop: 32,
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   emailInput: {
-    marginTop: 16
+    marginTop: 16,
   },
   passwordInput: {
-    marginTop: 16
+    marginTop: 16,
   },
   termsCheckBox: {
-    marginTop: 24
+    marginTop: 24,
   },
   termsCheckBoxText: {
-    color: "text-hint-color"
+    color: "text-hint-color",
   },
   signUpButton: {
-    marginHorizontal: 16
+    marginHorizontal: 16,
   },
   signInButton: {
     marginVertical: 12,
-    marginHorizontal: 16
-  }
+    marginHorizontal: 16,
+  },
 });
 
 export default SignUpScreen;

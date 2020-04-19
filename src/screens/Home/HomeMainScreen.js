@@ -5,14 +5,14 @@ import { NRIcon, KittenIcon } from "../../utils/icon-utils";
 
 const HomeMainScreen = ({ navigation }) => {
   navigation.setOptions({
-    title: "홈!",
+    title: "홈",
   });
 
   const seeMore = (item, index) => {
     console.log("더보기 >>>>>" + index);
   };
 
-  const CustomHeader = (item, index) => (
+  const CardHeader = (item, index) => (
     <React.Fragment>
       <Image
         style={styles.headerImage}
@@ -27,7 +27,7 @@ const HomeMainScreen = ({ navigation }) => {
     </React.Fragment>
   );
 
-  const Footer = (item, index) => (
+  const CardFooter = (item, index) => (
     <View style={styles.footerContainer}>
       <Button
         style={styles.footerControl}
@@ -42,8 +42,8 @@ const HomeMainScreen = ({ navigation }) => {
 
   const HomeCard = ({ item, index }) => (
     <Card
-      header={() => CustomHeader(item, index)}
-      footer={() => Footer(item, index)}
+      header={() => CardHeader(item, index)}
+      footer={() => CardFooter(item, index)}
       style={styles.card}
     >
       <Text>카드리스트 테스트 어쩌구저쩌구</Text>
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
   },
   contentsContainer: {
     flex: 1,
-    marginVertical: 5,
     marginHorizontal: 5,
   },
   headerText: {
@@ -91,6 +90,8 @@ const styles = StyleSheet.create({
   footerContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
+    paddingVertical: 10,
+    paddingHorizontal: 5,
   },
   footerControl: {
     marginHorizontal: 4,
