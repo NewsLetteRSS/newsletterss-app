@@ -8,7 +8,7 @@ import FindPwScreen from "../screens/Auth/FindPwScreen";
 const AuthStack = createStackNavigator();
 const otherOptions = {
   headerStyle: { backgroundColor: "#4391f0" },
-  headerTintColor: "#fff"
+  headerTintColor: "#fff",
 };
 
 const AuthStackNavigator = () => {

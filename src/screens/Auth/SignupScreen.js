@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Alert } from "react-native";
 import {
   Text,
   StyleService,
@@ -11,19 +11,67 @@ import {
 } from "@ui-kitten/components";
 import { NRIcon } from "../../utils/icon-utils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { apiPost } from "../../utils/api";
+import { useForm, Controller } from "react-hook-form";
 
 const SignUpScreen = ({ navigation }) => {
-  const [userName, setUserName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    errors,
+    control,
+    watch,
+  } = useForm();
+  const onSubmit = (data) => onSignUpButtonPress(data);
+  const password = useRef({});
+  password.current = watch("password", "");
+
+  useEffect(() => {
+    register({ name: "userName" }, { required: true });
+    register(
+      { name: "email" },
+      {
+        required: true,
+        pattern: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
+      }
+    );
+    register({ name: "password" }, { required: true, minLength: 8 });
+    register(
+      { name: "passwordConfirm" },
+      {
+        required: true,
+        validate: (value) => {
+          return value === password.current;
+        },
+        minLength: 8,
+      }
+    );
+    register(
+      { name: "termsAccepted" },
+      {
+        validate: (value) => {
+          return value === true;
+        },
+      }
+    );
+  }, [register]);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const styles = useStyleSheet(stylesheet);
 
-  const onSignUpButtonPress = () => {
-    // navigation && navigation.goBack();
+  const onSignUpButtonPress = (data) => {
+    Alert.alert("Form Data", JSON.stringify(data));
     // 가입하기 프로세스
+    // const response = apiPost("/user", {
+    //   username: userName,
+    //   password: password,
+    //   email: email,
+    // });
+    // alert("가입 완료");
+    // navigation && navigation.goBack();
+    console.log("가입하기");
   };
 
   const onSignInButtonPress = () => {
@@ -55,8 +103,7 @@ const SignUpScreen = ({ navigation }) => {
           autoCapitalize="none"
           placeholder="사용자명"
           icon={(style) => NRIcon(style, "person")}
-          value={userName}
-          onChangeText={setUserName}
+          onChangeText={(text) => setValue("userName", text, true)}
         />
         <Input
           style={styles.emailInput}
@@ -64,9 +111,8 @@ const SignUpScreen = ({ navigation }) => {
           placeholder="이메일"
           caption={"이메일은 비밀번호 찾는 용도로 사용됩니다."}
           icon={(style) => NRIcon(style, "email")}
-          value={email}
-          onChangeText={setEmail}
           keyboardType="email-address"
+          onChangeText={(text) => setValue("email", text, true)}
         />
         <Input
           style={styles.passwordInput}
@@ -76,8 +122,7 @@ const SignUpScreen = ({ navigation }) => {
           icon={(style) =>
             passwordVisible ? NRIcon(style, "eye") : NRIcon(style, "eye-off")
           }
-          value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => setValue("password", text, true)}
           onIconPress={onPasswordIconPress}
         />
         <Input
@@ -85,25 +130,32 @@ const SignUpScreen = ({ navigation }) => {
           autoCapitalize="none"
           secureTextEntry={!passwordVisible}
           placeholder="비밀번호 확인"
-          value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => setValue("passwordConfirm", text, true)}
         />
-        <CheckBox
-          style={styles.termsCheckBox}
-          textStyle={styles.termsCheckBoxText}
-          checked={termsAccepted}
-          onChange={(checked) => setTermsAccepted(checked)}
-        >
-          서비스 이용약관에 동의합니다.
-        </CheckBox>
+        <Controller
+          as={
+            <CheckBox
+              style={styles.termsCheckBox}
+              textStyle={styles.termsCheckBoxText}
+            >
+              서비스 이용약관에 동의합니다.
+            </CheckBox>
+          }
+          name="termsAccepted"
+          type="checkbox"
+          control={control}
+          defaultValue={false}
+        />
       </Layout>
       <Button
         style={styles.signUpButton}
         size="giant"
-        onPress={onSignUpButtonPress}
+        // onPress={onSignUpButtonPress}
+        onPress={handleSubmit(onSubmit)}
       >
         가입하기
       </Button>
+      <Text>{JSON.stringify(errors)}</Text>
       <Button
         style={styles.signInButton}
         appearance="ghost"
