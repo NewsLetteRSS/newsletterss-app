@@ -10,13 +10,13 @@ import TokenStore from "./src/store/TokenStore";
 
 const stores = {
   sample: new SampleStore(),
-  token: new TokenStore()
+  token: new TokenStore(),
 };
 
 class App extends Component {
   async componentDidMount() {
     await loadAsync({
-      NanumGothic: require("./assets/fonts/NanumGothic.ttf")
+      NanumGothic: require("./assets/fonts/NanumGothic.ttf"),
     });
   }
 

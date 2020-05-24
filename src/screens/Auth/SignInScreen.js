@@ -6,109 +6,126 @@ import {
   StyleService,
   useStyleSheet,
 } from "@ui-kitten/components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { View, Alert } from "react-native";
+import { View, Alert, NativeAppEventEmitter } from "react-native";
 import { NRIcon } from "../../utils/icon-utils.js";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { inject, observer } from "mobx-react";
+import { apiPost } from "../../utils/api.js";
+import Axios from "axios";
 
-const SignInScreen = ({ navigation }) => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const [passwordVisible, setPasswordVisible] = useState(false);
+const SignInScreen = inject("token")(
+  observer((props) => {
+    useEffect(() => {
+      const defaultFocus = navigation.addListener("focus", () => {
+        setUsername("");
+        setPassword("");
+      });
+      return defaultFocus;
+    }, [props.navigation]);
+    const navigation = props.navigation;
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const styles = useStyleSheet(stylesheet);
+    const styles = useStyleSheet(stylesheet);
 
-  const onSignUpButtonPress = () => {
-    navigation && navigation.navigate("SignUp");
-  };
+    const onSignUpButtonPress = () => {
+      props.navigation && navigation.navigate("SignUp");
+    };
 
-  const onForgotPasswordButtonPress = () => {
-    navigation && navigation.navigate("FindPw");
-  };
+    const onForgotPasswordButtonPress = () => {
+      navigation && navigation.navigate("FindPw");
+    };
 
-  const onPasswordIconPress = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+    const onPasswordIconPress = () => {
+      setPasswordVisible(!passwordVisible);
+    };
 
-  const login = (data) => {
-    navigation.navigate("Main"); // 임시 이동
-    // if (username && password) {
-    //   // TODO: 로그인 프로세스 타고 토큰 저장 후 Main으로 이동
-    //   navigation.navigate("Main"); // 임시 이동
-    // } else {
-    //   Alert.alert("확인", "아이디 또는 비밀번호를 확인해 주세요.");
-    // }
-  };
+    const login = async () => {
+      if (username && password) {
+        const response = await apiPost("/newsletterssAPI/auth/login", {
+          username: username,
+          password: password,
+        });
+        if (response && response.accessToken && response.refreshToken) {
+          await props.token.setToken(JSON.stringify(response));
+          navigation.navigate("Main");
+        } else {
+          Alert.alert("확인", "아이디 또는 비밀번호를 확인해 주세요.");
+          return;
+        }
+      } else {
+        Alert.alert("확인", "아이디 또는 비밀번호를 확인해 주세요.");
+      }
+    };
 
-  function goScreen(screen) {
-    navigation.navigate(screen);
-  }
-
-  return (
-    <KeyboardAwareScrollView
-      style={styles.container}
-      bounces={false}
-      bouncesZoom={false}
-      alwaysBounceHorizontal={false}
-      alwaysBounceVertical={false}
-      contentContainerStyle={{
-        flexGrow: 1,
-      }}
-    >
-      <View style={styles.headerContainer}>
-        <Text category="h1" status="control">
-          /* LOGO */
-        </Text>
-        <Text style={styles.signInLabel} category="s1" status="control">
-          NewsLetteRSS
-        </Text>
-      </View>
-      <Layout style={styles.formContainer} level="1">
-        <Input
-          placeholder="사용자명"
-          value={username}
-          onChangeText={setUsername}
-          icon={(style) => NRIcon(style, "person")}
-          autoCapitalize="none"
-        />
-        <Input
-          style={styles.passwordInput}
-          placeholder="비밀번호"
-          value={password}
-          secureTextEntry={!passwordVisible}
-          onChangeText={setPassword}
-          icon={(style) =>
-            passwordVisible ? NRIcon(style, "eye") : NRIcon(style, "eye-off")
-          }
-          onIconPress={onPasswordIconPress}
-          key
-        />
-        <View style={styles.forgotPasswordContainer}>
-          <Button
-            style={styles.forgotPasswordButton}
-            appearance="ghost"
-            status="basic"
-            onPress={onForgotPasswordButtonPress}
-          >
-            비밀번호를 잊어버렸나요?
-          </Button>
-        </View>
-      </Layout>
-      <Button style={styles.signInButton} size="giant" onPress={login}>
-        로그인
-      </Button>
-      <Button
-        style={styles.signUpButton}
-        appearance="ghost"
-        status="basic"
-        onPress={onSignUpButtonPress}
+    return (
+      <KeyboardAwareScrollView
+        style={styles.container}
+        bounces={false}
+        bouncesZoom={false}
+        alwaysBounceHorizontal={false}
+        alwaysBounceVertical={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
       >
-        계정이 없다면? 만들기!
-      </Button>
-    </KeyboardAwareScrollView>
-  );
-};
+        <View style={styles.headerContainer}>
+          <Text category="h1" status="control">
+            /* LOGO */
+          </Text>
+          <Text style={styles.signInLabel} category="s1" status="control">
+            NewsLetteRSS
+          </Text>
+        </View>
+        <Layout style={styles.formContainer} level="1">
+          <Input
+            placeholder="사용자명"
+            value={username}
+            onChangeText={setUsername}
+            icon={(style) => NRIcon(style, "person")}
+            autoCapitalize="none"
+          />
+          <Input
+            style={styles.passwordInput}
+            placeholder="비밀번호"
+            value={password}
+            secureTextEntry={!passwordVisible}
+            onChangeText={setPassword}
+            icon={(style) =>
+              passwordVisible ? NRIcon(style, "eye") : NRIcon(style, "eye-off")
+            }
+            onIconPress={onPasswordIconPress}
+            key
+          />
+          <View style={styles.forgotPasswordContainer}>
+            <Button
+              style={styles.forgotPasswordButton}
+              appearance="ghost"
+              status="basic"
+              onPress={onForgotPasswordButtonPress}
+            >
+              비밀번호를 잊어버렸나요?
+            </Button>
+          </View>
+        </Layout>
+        <Button style={styles.signInButton} size="giant" onPress={login}>
+          로그인
+        </Button>
+        <Button
+          style={styles.signUpButton}
+          appearance="ghost"
+          status="basic"
+          onPress={onSignUpButtonPress}
+        >
+          계정이 없다면? 만들기!
+        </Button>
+      </KeyboardAwareScrollView>
+    );
+  })
+);
 
 const stylesheet = StyleService.create({
   container: {

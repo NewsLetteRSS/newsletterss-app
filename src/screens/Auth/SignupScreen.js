@@ -63,12 +63,16 @@ const SignUpScreen = ({ navigation }) => {
 
   const onSignUpButtonPress = (data) => {
     // 가입하기 프로세스
+    console.log(data);
     const response = apiPost("/user", {
       username: data.userName,
       password: data.password,
       email: data.email,
     });
-    navigation && navigation.goBack();
+    if (response) {
+      Alert.alert("가입완료", "가입되었습니다. 로그인해주세요.");
+      navigation && navigation.goBack();
+    }
   };
 
   const onPasswordIconPress = () => {
