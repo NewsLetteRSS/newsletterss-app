@@ -62,20 +62,13 @@ const SignUpScreen = ({ navigation }) => {
   const styles = useStyleSheet(stylesheet);
 
   const onSignUpButtonPress = (data) => {
-    Alert.alert("Form Data", JSON.stringify(data));
     // 가입하기 프로세스
-    // const response = apiPost("/user", {
-    //   username: userName,
-    //   password: password,
-    //   email: email,
-    // });
-    // alert("가입 완료");
-    // navigation && navigation.goBack();
-    console.log("가입하기");
-  };
-
-  const onSignInButtonPress = () => {
-    navigation && navigation.navigate("SignIn");
+    const response = apiPost("/user", {
+      username: data.userName,
+      password: data.password,
+      email: data.email,
+    });
+    navigation && navigation.goBack();
   };
 
   const onPasswordIconPress = () => {
@@ -150,17 +143,15 @@ const SignUpScreen = ({ navigation }) => {
       <Button
         style={styles.signUpButton}
         size="giant"
-        // onPress={onSignUpButtonPress}
         onPress={handleSubmit(onSubmit)}
       >
         가입하기
       </Button>
-      <Text>{JSON.stringify(errors)}</Text>
       <Button
         style={styles.signInButton}
         appearance="ghost"
         status="basic"
-        onPress={onSignInButtonPress}
+        onPress={() => navigation.goBack()}
       >
         이미 계정이 있나요?
       </Button>
